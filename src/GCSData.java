@@ -1,3 +1,5 @@
+//TODO: Finish METHODS, REWRITE THE BATTER LEVEL LOW WARNING IN A CLEANER MANNER
+
 // Class Definition of GCSData
 public class GCSData {
 
@@ -6,16 +8,16 @@ public class GCSData {
     private double speed;
     private int battery;
     private double gpsposition;
-    private double yaw;
+    private double heading;
     private long timestamp;
 
     //constructor for GCSData, initializing our objects fields (characteristics).
-    public GCSData(double startAltitude, double startSpeed, int startBattery, double startGpsposition, double startYaw, long startTimestamp) {
+    public GCSData(double startAltitude, double startSpeed, int startBattery, double startGpsposition, double startHeading, long startTimestamp) {
         altitude = startAltitude;
         speed = startSpeed;
         battery = startBattery;
         gpsposition = startGpsposition;
-        yaw = startYaw;
+        heading = startHeading;
         timestamp = startTimestamp;
     }
 // Retrieving the instance variables from their private classes with getter methods.
@@ -36,8 +38,8 @@ public class GCSData {
         return gpsposition;
     }
 
-    public double getYaw() {
-        return yaw;
+    public double getHeading() {
+        return heading;
     }
 
     public double getTimestamp() {
@@ -45,6 +47,7 @@ public class GCSData {
     }
 
     //add Methods below the getters due to writing conventions
+
     public boolean isBatteryLow() {
         return battery <= 25;
     }
@@ -53,17 +56,33 @@ public class GCSData {
         battery = newBattery;
     }
 
+    public void setAltitude(double newAltitude) {
+    altitude = newAltitude;
+    }
+
 
     public static void main(String[] args) {
 
         //create object reference name --> myGCSData, and by saying --> new GCSData (the class name) we have created 1 object.
 
-        GCSData myGCSData = new GCSData(0, 0.0, 30, 100, 0.0, 1); // these arguments now get passed to the parameters in the constructor
+        GCSData myGCSData = new GCSData(1, 0.0, 30, 100, 0.0, 1); // these arguments now get passed to the parameters in the constructor
+
         // e.g. startAltitude = 0, then the constructor assigns them to the fields, altitude = startAltitude = 0
+        double altimeter = myGCSData.getAltitude();
+        {
+            if (altimeter == 0)
+                System.out.println("GROUNDED");
+
+            if (altimeter >= 1 && altimeter <= 25)
+                System.out.println("LOW ALTITUDE! ");
+        }
+
         System.out.println("Altitude: " + myGCSData.getAltitude());
         System.out.println("Speed: " + myGCSData.getSpeed());
         System.out.println("Battery: " + myGCSData.getBattery());
         System.out.println("Is battery low? " + myGCSData.isBatteryLow());
+
+
 
         // start time
         long startTime = System.currentTimeMillis(); // this method currentTimeMillis is the active time right now
